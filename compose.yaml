@@ -20,8 +20,8 @@ services:
       - GF_SECURITY_ADMIN_USER=admin
       - GF_SECURITY_ADMIN_PASSWORD=grafana
     volumes:
-      - ./grafana:/etc/grafana/provisioning/datasources
-      - grafana-storage:/var/lib/grafana
+      - /var/lib/docker/volumes/monitor_grafana-storage/config:/etc/grafana/provisioning/datasources
+      - /var/lib/docker/volumes/monitor_grafana-storage/_data:/var/lib/grafana
 volumes:
   prom_data:
   grafana-storage: {}
