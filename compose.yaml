@@ -8,8 +8,8 @@ services:
       - 9090:9090
     restart: unless-stopped
     volumes:
-      - ./prometheus:/etc/prometheus
-      - prom_data:/prometheus
+      - /var/lib/docker/volumes/monitor_prom_data/config:/etc/prometheus
+      - /var/lib/docker/volumes/monitor_prom_data/_data:/prometheus
   grafana:
     image: grafana/grafana
     container_name: grafana
