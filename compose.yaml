@@ -16,12 +16,12 @@ services:
       - "traefik.http.routers.prometheus.entrypoints=http"
       - "traefik.http.routers.prometheus.rule=Host(`prometheus.mossin.net`)"
       - "traefik.http.middlewares.prometheus-https-redirect.redirectscheme.scheme=https"
-      - "traefik.http.routers.prometheus.middlewares=portainer-https-redirect"
+      - "traefik.http.routers.prometheus.middlewares=prometheus-https-redirect"
       - "traefik.http.routers.prometheus-secure.entrypoints=https"
       - "traefik.http.routers.prometheus-secure.rule=Host(`prometheus.mossin.net`)"
       - "traefik.http.routers.prometheus-secure.tls=true"
       - "traefik.http.routers.prometheus-secure.service=prometheus"
-      - "traefik.http.services.prometheus.loadbalancer.server.port=3000"
+      - "traefik.http.services.prometheus.loadbalancer.server.port=9090"
       #- "traefik.docker.network=proxy"
   grafana:
     image: grafana/grafana
@@ -41,7 +41,7 @@ services:
       - "traefik.http.routers.grafana.entrypoints=http"
       - "traefik.http.routers.grafana.rule=Host(`grafana.mossin.net`)"
       - "traefik.http.middlewares.grafana-https-redirect.redirectscheme.scheme=https"
-      - "traefik.http.routers.grafana.middlewares=portainer-https-redirect"
+      - "traefik.http.routers.grafana.middlewares=grafana-https-redirect"
       - "traefik.http.routers.grafana-secure.entrypoints=https"
       - "traefik.http.routers.grafana-secure.rule=Host(`grafana.mossin.net`)"
       - "traefik.http.routers.grafana-secure.tls=true"
