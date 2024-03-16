@@ -36,7 +36,7 @@ services:
       - GF_SECURITY_ADMIN_PASSWORD=grafana
     volumes:
       - /var/lib/docker/volumes/monitor_grafana-storage/config:/etc/grafana/provisioning/datasources
-      - /var/lib/docker/volumes/monitor_grafana-storage/_data:/var/lib/grafanai
+      - /var/lib/docker/volumes/monitor_grafana-storage/_data:/var/lib/grafana
     labels:
       - com.host.description=label
       - "traefik.enable=true"
