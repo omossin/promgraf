@@ -22,7 +22,9 @@ services:
       - "traefik.http.routers.prometheus-secure.tls=true"
       - "traefik.http.routers.prometheus-secure.service=prometheus"
       - "traefik.http.services.prometheus.loadbalancer.server.port=9090"
-      #- "traefik.docker.network=proxy"
+      - "traefik.docker.network=proxy"
+    networks:
+      - proxy
   grafana:
     image: grafana/grafana
     container_name: grafana
@@ -47,7 +49,13 @@ services:
       - "traefik.http.routers.grafana-secure.tls=true"
       - "traefik.http.routers.grafana-secure.service=grafana"
       - "traefik.http.services.grafana.loadbalancer.server.port=3000"
-      #- "traefik.docker.network=proxy"
+      - "traefik.docker.network=proxy"
+    networks:
+      - proxy
 volumes:
   prom_data:
   grafana-storage: {}
+
+networks:
+  proxy:
+    external: true
