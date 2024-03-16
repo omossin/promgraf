@@ -10,6 +10,19 @@ services:
     volumes:
       - /var/lib/docker/volumes/monitor_prom_data/config:/etc/prometheus
       - /var/lib/docker/volumes/monitor_prom_data/_data:/prometheus
+    labels:
+      - com.host.description=label
+      - "traefik.enable=true"
+      - "traefik.http.routers.prometheus.entrypoints=http"
+      - "traefik.http.routers.prometheus.rule=Host(`prometheus.mossin.net`)"
+      - "traefik.http.middlewares.prometheus-https-redirect.redirectscheme.scheme=https"
+      - "traefik.http.routers.prometheus.middlewares=portainer-https-redirect"
+      - "traefik.http.routers.prometheus-secure.entrypoints=https"
+      - "traefik.http.routers.prometheus-secure.rule=Host(`prometheus.mossin.net`)"
+      - "traefik.http.routers.prometheus-secure.tls=true"
+      - "traefik.http.routers.prometheus-secure.service=prometheus"
+      - "traefik.http.services.prometheus.loadbalancer.server.port=3000"
+      #- "traefik.docker.network=proxy"
   grafana:
     image: grafana/grafana
     container_name: grafana
@@ -21,7 +34,20 @@ services:
       - GF_SECURITY_ADMIN_PASSWORD=grafana
     volumes:
       - /var/lib/docker/volumes/monitor_grafana-storage/config:/etc/grafana/provisioning/datasources
-      - /var/lib/docker/volumes/monitor_grafana-storage/_data:/var/lib/grafana
+      - /var/lib/docker/volumes/monitor_grafana-storage/_data:/var/lib/grafanai
+    labels:
+      - com.host.description=label
+      - "traefik.enable=true"
+      - "traefik.http.routers.grafana.entrypoints=http"
+      - "traefik.http.routers.grafana.rule=Host(`grafana.mossin.net`)"
+      - "traefik.http.middlewares.grafana-https-redirect.redirectscheme.scheme=https"
+      - "traefik.http.routers.grafana.middlewares=portainer-https-redirect"
+      - "traefik.http.routers.grafana-secure.entrypoints=https"
+      - "traefik.http.routers.grafana-secure.rule=Host(`grafana.mossin.net`)"
+      - "traefik.http.routers.grafana-secure.tls=true"
+      - "traefik.http.routers.grafana-secure.service=grafana"
+      - "traefik.http.services.grafana.loadbalancer.server.port=3000"
+      #- "traefik.docker.network=proxy"
 volumes:
   prom_data:
   grafana-storage: {}
